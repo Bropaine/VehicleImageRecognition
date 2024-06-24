@@ -17,7 +17,7 @@ def encode_image(image_bytes):
     return base64.b64encode(image_bytes).decode('utf-8')
 
 
-async def identify_image_content(files: List[UploadFile]):
+async def identify_image_content(files: List[UploadFile], prompt: str):
     base64_images = []
 
     for index, file in enumerate(files):
@@ -33,36 +33,7 @@ async def identify_image_content(files: List[UploadFile]):
     content = [
         {
             "type": "text",
-            "text": (
-                "You are an expert at identifying anomalies in a group of images, "
-                "specifically in recognizing when an image is something other than a vehicle. "
-                "Your primary task is to identify and classify images that contain a vehicle delivery receipt or a "
-                "Bill of Lading (BOL). BOL will sometimes have outline images of vehicle orientations or will say "
-                "BOL. Vehicle delivery receipts must have words like Received or Delivered on it and look outstanding "
-                "from typical"
-                "receipts such as maintenance or per diem receipts, which belong in the other category. You are also "
-                "responsible for categorizing images that"
-                "show damage to a"
-                "vehicle, look for noticeable damage. You will also be responsible for identifying and categorizing "
-                "images of vehicle gauges like odometer readings or fuel gauges."
-                "Images that dont show any of the above listed items should be categorized as other"
-                "The images will be sent in order, and I need a structured JSON output with a dictionary, formatted "
-                "as follows:\n\n"
-                "{\n  \"image_01\": \"vehicle\",\n  \"image_02\": \"delivery_receipt\",\n  \"image_03\": \"bol\","
-                "\n  \"image_04\": \"other\"\n, \n  \"image_05\": \"damaged_vehicle\"\n, \n  \"image_06\": "
-                "\"gauge_reading\"\n}\n\n"
-                "Instructions:\n"
-                "1. Analyze each image.\n"
-                "2. Determine which images contain a BOL or a delivery receipt.\n"
-                "3. Pay close attention to paperwork; some items that look like paper may be trash or useless.\n"
-                "4. Be concise and methodical when classifying the images. Pay close attention to the paperwork and "
-                "decipher what is a BOL or delivery receipt\n"
-                "5. Provide the output in a structured JSON dictionary, maintaining the input order of the images.\n\n"
-                "The output must be valid JSON structure and only valid JSON structure. "
-                "The JSON structure string must only use double quotes "
-                "Please ensure the output is clear, accurate, and follows the example format. ::: No Yapping ::: "
-                "I only want the data structure in your response."
-            )
+            "text": prompt
         }
     ]
 
@@ -89,7 +60,6 @@ async def identify_image_content(files: List[UploadFile]):
 
     response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
 
-    # Print response for debugging
     print("API Response Status:", response.status_code)
     response_text = response.content.decode('utf-8')
     print("API Response Content:", response_text)

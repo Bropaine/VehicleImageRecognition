@@ -4,83 +4,134 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Image Upload</title>
-<style>
-    body {
-        font-family: 'Arial', sans-serif;
-        background-color: #2b2b2b; /* Dark mocha background */
-        color: #ffffff; /* White text */
-        margin: 0;
-        padding: 0;
-    }
-    h1 {
-        text-align: center; /* Center the heading */
-        font-size: 2em; /* Increase font size */
-        margin-top: 20px; /* Add some margin at the top */
-        color: #ffffff; /* Lighter mocha text */
-    }
-    .upload-area {
-        border: 2px dashed #a67c52; /* Mocha border */
-        padding: 20px;
-        margin: 20px auto; /* Centered horizontally */
-        text-align: center;
-        cursor: pointer;
-        transition: background-color 0.3s ease, border-color 0.3s ease;
-        background-color: #3e3e3e; /* Slightly lighter mocha background */
-        color: #ffffff; /* White text */
-        max-width: 600px; /* Set a max width */
-        border-radius: 8px; /* Rounded corners for modern look */
-    }
-    .upload-area:hover {
-        background-color: #4e4e4e; /* Slightly lighter on hover */
-        border-color: #d4a373; /* Lighter mocha on hover */
-    }
-    .images {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px;
-        padding: 20px;
-        justify-content: center; /* Center the images */
-    }
-    .image-container {
-        text-align: center;
-        margin: 10px;
-        flex: 1 1 calc(25% - 40px); /* Adjust the percentage to control the number of images per row */
-        box-sizing: border-box;
-        background-color: #4e4e4e; /* Slightly lighter mocha for image containers */
-        padding: 10px;
-        border-radius: 8px; /* Rounded corners for modern look */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow */
-    }
-    .image-container img {
-        max-width: 100%;
-        max-height: 200px;
-        display: block;
-        margin: 0 auto;
-        border-radius: 4px; /* Rounded corners for images */
-    }
-    .image-container p {
-        font-weight: bold;
-        margin-top: 10px;
-        color: #d4a373; /* Lighter mocha text */
-        font-size: 1.1em; /* Slightly larger font size */
-    }
-    button {
-        background-color: #a67c52; /* Mocha background */
-        color: #ffffff; /* White text */
-        border: none;
-        padding: 10px 20px;
-        margin: 20px auto; /* Centered horizontally */
-        display: block; /* Ensure block display for centering */
-        cursor: pointer;
-        border-radius: 8px; /* Rounded corners */
-        transition: background-color 0.3s ease;
-        font-size: 1.1em; /* Slightly larger font size */
-        font-weight: bold; /* Make the font bolder */
-    }
-    button:hover {
-        background-color: #d4a373; /* Lighter mocha on hover */
-    }
-</style>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #2b2b2b; /* Dark mocha background */
+            color: #ffffff; /* White text */
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            text-align: center; /* Center the heading */
+            font-size: 2em; /* Increase font size */
+            margin-top: 20px; /* Add some margin at the top */
+            color: #ffffff; /* Lighter mocha text */
+        }
+        .upload-area {
+            border: 2px dashed #a67c52; /* Mocha border */
+            padding: 20px;
+            margin: 20px auto; /* Centered horizontally */
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+            background-color: #3e3e3e; /* Slightly lighter mocha background */
+            color: #ffffff; /* White text */
+            max-width: 600px; /* Set a max width */
+            border-radius: 8px; /* Rounded corners for modern look */
+        }
+        .upload-area:hover {
+            background-color: #4e4e4e; /* Slightly lighter on hover */
+            border-color: #d4a373; /* Lighter mocha on hover */
+        }
+        .images {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+            justify-content: center; /* Center the images */
+        }
+        .image-container {
+            text-align: center;
+            margin: 10px;
+            flex: 1 1 calc(25% - 40px); /* Adjust the percentage to control the number of images per row */
+            box-sizing: border-box;
+            background-color: #4e4e4e; /* Slightly lighter mocha for image containers */
+            padding: 10px;
+            border-radius: 8px; /* Rounded corners for modern look */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow */
+        }
+        .image-container img {
+            max-width: 100%;
+            max-height: 200px;
+            display: block;
+            margin: 0 auto;
+            border-radius: 4px; /* Rounded corners for images */
+        }
+        .image-container p {
+            font-weight: bold;
+            margin-top: 10px;
+            color: #d4a373; /* Lighter mocha text */
+            font-size: 1.1em; /* Slightly larger font size */
+        }
+        button {
+            background-color: #a67c52; /* Mocha background */
+            color: #ffffff; /* White text */
+            border: none;
+            padding: 10px 20px;
+            margin: 20px auto; /* Centered horizontally */
+            display: block; /* Ensure block display for centering */
+            cursor: pointer;
+            border-radius: 8px; /* Rounded corners */
+            transition: background-color 0.3s ease;
+            font-size: 1.1em; /* Slightly larger font size */
+            font-weight: bold; /* Make the font bolder */
+        }
+        button:hover {
+            background-color: #d4a373; /* Lighter mocha on hover */
+        }
+        .toggle-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin: 20px;
+        }
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: #a67c52;
+        }
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        .toggle-label {
+            margin-top: 10px;
+            font-size: 1.2em;
+            color: #ffffff; /* White text */
+        }
+    </style>
 </head>
 <body>
     <h1>Upload Images</h1>
@@ -88,6 +139,13 @@
         Click to Upload Images
     </div>
     <input type="file" id="file-input" multiple accept="image/*" style="display: none;">
+    <div class="toggle-container">
+        <label class="toggle-switch">
+            <input type="checkbox" id="endpoint-toggle" onchange="updateToggleLabel()">
+            <span class="slider"></span>
+        </label>
+        <div id="toggle-label" class="toggle-label">Image Classification</div>
+    </div>
     <button onclick="sendFiles()">Send</button>
     <div class="images" id="images"></div>
 
@@ -95,6 +153,8 @@
         const uploadArea = document.getElementById('upload-area');
         const fileInput = document.getElementById('file-input');
         const imagesContainer = document.getElementById('images');
+        const endpointToggle = document.getElementById('endpoint-toggle');
+        const toggleLabel = document.getElementById('toggle-label');
         let files = [];
 
         uploadArea.addEventListener('click', () => {
@@ -130,10 +190,16 @@
             Array.from(files).forEach(file => {
                 formData.append('files', file);
             });
-            const response = await fetch('/identify_image_content/', {
+
+            const endpoint = endpointToggle.checked
+                ? '/identify_vehicle_orientation/'
+                : '/identify_image_content/';
+
+            const response = await fetch(endpoint, {
                 method: 'POST',
                 body: formData
             });
+
             const result = await response.json();
             displayResults(result);
         }
@@ -144,6 +210,15 @@
                 labels[index].innerText = `Category: ${result[key]}`;
             });
         }
+
+        function updateToggleLabel() {
+            toggleLabel.innerText = endpointToggle.checked
+                ? 'Vehicle Orientation'
+                : 'Image Classification';
+        }
+
+        // Initialize the label on page load
+        updateToggleLabel();
     </script>
 </body>
 </html>
